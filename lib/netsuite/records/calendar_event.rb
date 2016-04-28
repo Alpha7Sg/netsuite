@@ -14,7 +14,10 @@ module NetSuite
       
       field :custom_field_list, CustomFieldList
       
-      record_refs :company, :contact, :customForm, :organizer, :owner, :support_case, :transaction 
+      record_refs :company, :contact, :customForm, :organizer, :owner, :support_case, :transaction
+      
+      attr_reader   :internal_id
+      attr_accessor :external_id      
       
       def initialize(attributes = {})
         @internal_id = attributes.delete(:internal_id) || attributes.delete(:@internal_id)
