@@ -1,23 +1,20 @@
 module NetSuite
   module Records
+    class CustomerCategory
+      # https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2015_2/schema/record/customercategory.html
 
-    class Bin
-      include Support::Records
       include Support::Fields
       include Support::RecordRefs
+      include Support::Records
       include Support::Actions
       include Namespaces::ListAcct
 
-      # https://system.netsuite.com/help/helpcenter/en_US/srbrowser/Browser2014_1/schema/record/bin.html?mode=package
+      actions :get, :get_list, :get_all, :add, :update, :delete, :search
 
-      attr_reader   :internal_id
+      fields :name, :is_inactive
+
+      attr_reader :internal_id
       attr_accessor :external_id
-
-      actions :get, :add, :delete, :search, :update, :upsert
-
-      fields :bin_number, :is_inactive, :location, :memo
-
-      field :custom_field_list, NetSuite::Records::CustomFieldList
 
       def initialize(attributes = {})
         @internal_id = attributes.delete(:internal_id) || attributes.delete(:@internal_id)
@@ -25,6 +22,5 @@ module NetSuite
         initialize_from_attributes_hash(attributes)
       end
     end
-
   end
 end

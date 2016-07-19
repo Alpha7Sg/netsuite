@@ -1,20 +1,21 @@
 module NetSuite
   module Records
-    class SalesOrderItem
+    class PurchaseOrderItem
       include Support::Fields
       include Support::RecordRefs
       include Support::Records
-      include Namespaces::TranSales
+      include Namespaces::TranPurch
 
-      fields :amount, :bin_numbers, :cost_estimate, :cost_estimate_type, :defer_rev_rec, :description, :gift_cert_from,
-        :gift_cert_message, :gift_cert_number, :gift_cert_recipient_email, :gift_cert_recipient_name, :gross_amt, :is_taxable,
-        :line, :order_line, :po_currency, :quantity, :rate, :rev_rec_end_date, :rev_rec_start_date, :rev_rec_term_in_months,
-        :serial_numbers, :shipping_cost, :tax1_amt, :tax_rate1, :tax_rate2, :vsoe_allocation, :vsoe_amount, :vsoe_deferral,
-        :vsoe_delivered, :vsoe_permit_discount, :vsoe_price, :is_closed, :quantity_commited, :quantity_fulfilled
+      fields :amount, :description, :expected_receipt_date, :gross_amt, :is_billable,
+             :is_closed, :line, :match_bill_to_receipt, :quantity, :quantity_available,
+             :quantity_billed, :quantity_on_hand, :quantity_received, :rate, :serial_numbers,
+             :tax1_amt, :tax_rate1, :tax_rate2, :vendor_name
 
       field :custom_field_list, CustomFieldList
 
-      record_refs :department, :item, :job, :klass, :location, :price, :rev_rec_schedule, :tax_code, :units
+      record_refs :bill_variance_status, :klass, :created_from, :customer, :department,
+                  :inventory_detail, :item, :landed_cost_category, :linked_order_list,
+                  :location, :options, :purchase_contract, :tax_code, :units
 
       def initialize(attributes_or_record = {})
         case attributes_or_record

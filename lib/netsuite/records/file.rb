@@ -1,6 +1,8 @@
 module NetSuite
   module Records
-    class File < NetSuite::Support::Base
+    class File
+      include Support::Records
+      include Support::Fields
       include Support::RecordRefs
       include Support::Actions
       include Namespaces::FileCabinet
@@ -9,7 +11,7 @@ module NetSuite
 
       actions :get, :add, :delete, :search, :get_list
 
-      fields :content, :description, :name, :media_type_name, :file_type, :text_file_encoding
+      fields :content, :description, :name, :media_type_name, :file_type, :text_file_encoding, :created_date, :last_modified_date
 
       record_refs :folder, :klass
 
@@ -17,7 +19,13 @@ module NetSuite
 
       attr_reader   :internal_id
       attr_accessor :external_id
+
+      def initialize(attributes = {})
+        @internal_id = attributes.delete(:internal_id) || attributes.delete(:@internal_id)
+        @external_id = attributes.delete(:external_id) || attributes.delete(:@external_id)
+        initialize_from_attributes_hash(attributes)
+      end
+
     end
   end
 end
-
